@@ -13,7 +13,6 @@ class App extends Component {
         data: [1000, 1100, 1200, 1300, 1500, 2000, 2000, 1500, 1500, 1600]
       }
     )
-    this.renderChart(this.state.data);
   }
 
   componentDidMount() {
