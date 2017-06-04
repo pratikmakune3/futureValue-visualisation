@@ -3,11 +3,6 @@ import Chart from './Chart';
 
 class App extends Component {
 
-
-  // componentDidUpdate() {
-  //   this.renderChart(this.props.data);
-  // }
-
   render() {
     return (
       <div>
