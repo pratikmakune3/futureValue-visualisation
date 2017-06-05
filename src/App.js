@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
 import Chart from './Chart';
+import Form from './Form'
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      chart_data: []
+    }
+    this.setData = this.setData.bind(this);
+  }
+
+  setData(data) {
+    console.log(data);
+    this.setState({chart_data: data});
+  }
+
   render() {
+    console.log('****',this.state.chart_data);
     return (
       <div>
-        <Chart data={[1000, 1100, 1200, 1300, 1500, 2000, 2000, 1500, 1500, 1600]} />
-        <Chart data={[1000, 1000, 1200, 1200, 2000, 2000, 1300, 1500, 1500, 1600]} />
+        <Form setData={this.setData} />
+        <Chart data={this.state.chart_data} />
       </div>
     );
   }

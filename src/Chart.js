@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 
+window.d3 = d3;
+
 class Chart extends Component {
 
   componentDidMount() {
+    console.log('componentDidMount ', this.props.data);
+    this.renderChart(this.props.data);
+  }
+
+  componentDidUpdate() {
     this.renderChart(this.props.data);
   }
 
@@ -50,11 +57,11 @@ class Chart extends Component {
                 .call(xAxis);
 
       barCanvas.selectAll("rect")
-               .data(dataArray, function(d, i) { console.log('' + i + '-' + d); return '' + i + '-' + d; })
+               .data(dataArray, function(d, i) { return '' + i + '-' + d; })
                .enter()
                   .append("rect")
                   .attr("height", function(d) { return scaleHeight(d); })
-                  .attr("width", function () { console.log(scaleWidth.bandwidth()); return scaleWidth.bandwidth(); })
+                  .attr("width", function () { return scaleWidth.bandwidth(); })
                   .attr("fill", "steelblue")
                   .attr("x", function(d, i) { return scaleWidth(i); })
                   .attr("y", function(d) { return (200-scaleHeight(d)) });
