@@ -5,9 +5,8 @@ window.d3 = d3;
 
 class Chart extends Component {
 
-  componentDidMount() {
-    console.log('componentDidMount ', this.props.data);
-    this.renderChart(this.props.data);
+  componentWillUpdate() {
+    this.node.innerHTML = '';
   }
 
   componentDidUpdate() {
@@ -15,12 +14,15 @@ class Chart extends Component {
   }
 
   renderChart(data) {
+
+      var node = this.node;
+      // console.log(node);
+
       var dataArray = data;
       var minDataElem = Math.min(...dataArray);
       var maxDataElem = Math.max(...dataArray);
 
       var width = 400;
-      var height = maxDataElem;
 
       var scaleHeight = d3.scaleLinear()
                           .domain([minDataElem, maxDataElem])
@@ -43,7 +45,7 @@ class Chart extends Component {
       var yAxis = d3.axisLeft(yAxisScale);
       var xAxis = d3.axisBottom(xAxisScale).ticks(dataArray.length);
 
-      var barCanvas = d3.select(".chart")
+      var barCanvas = d3.select(`.${this.props.uid}`)
                         .append("svg")
                           .attr("width", width + 40)
                           .attr("height", 400)
@@ -59,7 +61,7 @@ class Chart extends Component {
       barCanvas.selectAll("rect")
                .data(dataArray, function(d, i) { return '' + i + '-' + d; })
                .enter()
-                  .append("rect")
+               .append("rect")
                   .attr("height", function(d) { return scaleHeight(d); })
                   .attr("width", function () { return scaleWidth.bandwidth(); })
                   .attr("fill", "steelblue")
@@ -68,7 +70,7 @@ class Chart extends Component {
   }
 
   render() {
-    return <div className="chart" id="chart"></div>;
+    return <div ref={node => this.node = node} className={this.props.uid} ></div>;
   }
 }
 

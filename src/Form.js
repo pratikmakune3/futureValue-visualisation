@@ -49,15 +49,15 @@ class Form extends Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Amount:
-          <input type="text" ref={this.state.amount} onChange={this.handleAmountChange} />
+          <input type="text" onChange={this.handleAmountChange} />
         </label>
         <label>
           Interest Rate:
-          <input type="text" ref={this.state.interest_rate} onChange={this.handleInterestChange} />
+          <input type="text" onChange={this.handleInterestChange} />
         </label>
         <label>
           Number of Years:
-          <input type="text" ref={this.state.years} onChange={this.handleYearChange} />
+          <input type="text" onChange={this.handleYearChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>

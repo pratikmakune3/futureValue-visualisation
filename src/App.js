@@ -18,11 +18,10 @@ class App extends Component {
   }
 
   render() {
-    console.log('****',this.state.chart_data);
     return (
       <div>
         <Form setData={this.setData} />
-        <Chart data={this.state.chart_data} />
+        <Chart uid="chart-1" data={this.state.chart_data} />
       </div>
     );
   }
