@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 
-window.d3 = d3;
-
 class Chart extends Component {
 
-  componentWillUpdate() {
-    this.node.innerHTML = '';
+  componentDidMount() {
+    d3.select(this.node).append("svg").attr("height", 400).attr("width", 440);
+
+    var svg = d3.select(this.node).select('svg');
+    svg.append("g")
+        .attr('class', 'y-axis')
+        .attr("transform", "translate(50, 50)");
+
+    svg.append("g")
+                .attr('class', 'x-axis')
+                .attr("transform", "translate(50, 250)");
   }
 
   componentDidUpdate() {
@@ -15,10 +22,9 @@ class Chart extends Component {
 
   renderChart(data) {
 
-      var node = this.node;
-      // console.log(node);
-
       var dataArray = data;
+      console.log('data', dataArray.length, dataArray)
+
       var minDataElem = Math.min(...dataArray);
       var maxDataElem = Math.max(...dataArray);
 
@@ -45,28 +51,31 @@ class Chart extends Component {
       var yAxis = d3.axisLeft(yAxisScale);
       var xAxis = d3.axisBottom(xAxisScale).ticks(dataArray.length);
 
-      var barCanvas = d3.select(`.${this.props.uid}`)
-                        .append("svg")
-                          .attr("width", width + 40)
-                          .attr("height", 400)
-                        .append("g")
-                          .attr("transform", "translate(50, 50)");
+      const svg = d3.select(this.node).select('svg');
 
-      barCanvas.call(yAxis);
+      svg.select('.y-axis').call(yAxis);
 
-      barCanvas.append("g")
-                  .attr("transform", "translate(0, 200)")
+      svg.select('.x-axis')
                 .call(xAxis);
 
-      barCanvas.selectAll("rect")
-               .data(dataArray, function(d, i) { return '' + i + '-' + d; })
-               .enter()
-               .append("rect")
-                  .attr("height", function(d) { return scaleHeight(d); })
-                  .attr("width", function () { return scaleWidth.bandwidth(); })
+      debugger;
+      const rects = svg.selectAll("rect")
+
+               .data(dataArray, function(d, i) { return i; });
+
+      rects.exit()
+        .remove();
+
+      rects.enter()
+                .append('g')
+                  .attr("transform", "translate(50, 50)")
+                .append("rect")
                   .attr("fill", "steelblue")
-                  .attr("x", function(d, i) { return scaleWidth(i); })
-                  .attr("y", function(d) { return (200-scaleHeight(d)) });
+              .merge(rects)
+                .attr("x", function(d, i) { return scaleWidth(i); })
+                .attr("y", function(d) { return (200-scaleHeight(d)) })
+                .attr("height", function(d) { return scaleHeight(d); })
+                .attr("width", function () { return scaleWidth.bandwidth(); });
   }
 
   render() {

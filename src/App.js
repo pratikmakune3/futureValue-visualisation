@@ -13,11 +13,13 @@ class App extends Component {
   }
 
   setData(data) {
-    console.log(data);
+    // console.log(data);
     this.setState({chart_data: data});
   }
 
   render() {
+
+    // console.log(Chart);
     return (
       <div>
         <Form setData={this.setData} />
