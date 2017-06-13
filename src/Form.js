@@ -27,28 +27,27 @@ class Form extends Component {
   }
 
   handleSubmit(event) {
-      var future_value_data_array = [];
-
-      var principle_amnt = this.state.amount;
-      var rate = this.state.interest_rate;
-      var years = this.state.years;
-
-      for(var i=1; i<=years; i++){
-        var pow = Math.pow((1+rate/100), i);
-        var future_value = principle_amnt * pow;
-        future_value_data_array.push(future_value);
-      }
-
-      this.props.setData(future_value_data_array);
-
     event.preventDefault();
+    var future_value_data_array = [];
+    var principle_amnt = this.state.amount;
+    var rate = this.state.interest_rate;
+    var years = this.state.years;
+
+    for(var i=1; i<=years; i++){
+      var pow = Math.pow((1+rate/100), i);
+      var future_value = principle_amnt * pow;
+      future_value_data_array.push(future_value);
+    }
+
+    this.props.setData(future_value_data_array);
+
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Amount:
+          Amount(in Rs.):
           <input type="text" onChange={this.handleAmountChange} />
         </label>
         <label>
