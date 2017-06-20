@@ -24,11 +24,22 @@ class App extends Component {
   }
 
   render() {
+    var chart1;
+    var chart2;
+
+    if(this.state.chart_data1[0] !== 0){
+      chart1 = <Chart uid="chart-1" data1={this.state.chart_data1} data2={this.state.chart_data2} />
+    }
+
+    if(this.state.chart_data3[0] !== 0){
+      chart2 = <Chart uid="chart-2" data1={this.state.chart_data3} data2={this.state.chart_data4} />
+    }
+
     return (
       <div>
         <Form setData_chart1={this.setData_chart1} setData_chart2={this.setData_chart2} />
-        <Chart uid="chart-1" data1={this.state.chart_data1} data2={this.state.chart_data2} />
-        <Chart uid="chart-2" data1={this.state.chart_data3} data2={this.state.chart_data4} />
+        {chart1}
+        {chart2}
       </div>
     );
   }
